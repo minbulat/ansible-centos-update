@@ -1,0 +1,24 @@
+---
+# tasks file for update-centos
+- name: Обновить пакеты до последней версии
+  yum:
+    name: '*'
+    state: latest
+    exclude: httpd
+  register: yum_update
+
+- name: Установить значение параметра installonly_limit в 2
+  ini_file:
+    path: /etc/yum.conf
+    section: main
+    option: installonly_limit
+    value: 2
+
+- name: Удалить старые версии ядра
+  command: /usr/bin/package-cleanup --oldkernels --count=2 -y
+  register: packagecleanupout
+  changed_when: "'No old kernels to remove' not in packagecleanupout.stdout"
+
+- name: Перезагрузить сервер, если были обновлены пакеты
+  reboot:
+  when: yum_update.changed
