@@ -1,0 +1,4 @@
+[servers]
+srv-1 ansible_host=212.193.58.200 ansible_user=root
+srv-2 ansible_host=212.193.59.47 ansible_user=root
+srv-3 ansible_host=212.193.59.148 ansible_user=root

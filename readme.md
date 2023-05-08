@@ -1,0 +1,1 @@
+Run: `ansible-playbook -i inventories/servers/hosts server_update.yml`
